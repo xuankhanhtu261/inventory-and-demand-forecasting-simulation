@@ -4,7 +4,7 @@ A data-driven framework combining time series forecasting, Monte Carlo simulatio
 
 ## Overview
 
-Point forecasts alone don't tell you how much safety stock to hold -- real demand deviates from any single prediction. This project builds a full pipeline that goes from raw sales data to a concrete, risk-aware inventory policy recommendation:
+Point forecasts alone don't tell you how much safety stock to hold --real demand deviates from any single prediction. This project builds a full pipeline that goes from raw sales data to a concrete, risk-aware inventory policy recommendation:
 
 1. **Forecast** future demand using four models of increasing complexity
 2. **Simulate** thousands of plausible demand futures via Monte Carlo (bootstrap-resampled forecast errors)
@@ -15,10 +15,10 @@ Applied to two years of daily sales data for a single grocery product (Store S00
 
 ## Key Findings
 
-- **SARIMAX** was the best-performing forecasting model (MAE 25.47, RMSE 32.17, MAPE 27.15%), outperforming Seasonal Naive, Holt-Winters ETS, and XGBoost — driven by its ability to incorporate exogenous factors (Promotion, Epidemic, Weather, Seasonality) alongside temporal dependence.
+- **SARIMAX** was the best-performing forecasting model (MAE 25.47, RMSE 32.17, MAPE 27.15%), outperforming Seasonal Naive, Holt-Winters ETS, and XGBoost, driven by its ability to incorporate exogenous factors (Promotion, Epidemic, Weather, Seasonality) alongside temporal dependence.
 - **Epidemic conditions and Promotions** were the strongest demand drivers identified by both SARIMAX coefficients and XGBoost feature importance. Promotion is the only one of these directly controllable by the business.
 - **Promotions increase demand but also increase stockout risk** (13.3% to 18.0% under a fixed reorder policy) unless replenishment strategy is adjusted accordingly.
-- **A reorder-point (s, S) policy with safety factor k = 2.33** achieved the best tradeoff: ~1.7-3.4% stockout probability while holding only ~245–260 units of average ending inventory — roughly 60% less inventory than a fixed periodic policy needed to reach a comparable service level.
+- **A reorder-point (s, S) policy with safety factor k = 2.33** achieved the best tradeoff: ~1.7-3.4% stockout probability while holding only ~245-260 units of average ending inventory, roughly 60% less inventory than a fixed periodic policy needed to reach a comparable service level.
 
 ## Methodology
 
@@ -38,7 +38,7 @@ Applied to two years of daily sales data for a single grocery product (Store S00
 SARIMAX order `(1,0,2)(0,0,0)[7]` selected via `auto_arima` (AIC-optimized).
 
 ### 3. Monte Carlo Demand Simulation
-- SARIMAX out-of-sample residuals bootstrap-resampled (non-parametric — residuals showed heavy tails per Q-Q plot) and added to point forecasts
+- SARIMAX out-of-sample residuals bootstrap-resampled (non-parametric, residuals showed heavy tails per Q-Q plot) and added to point forecasts
 - 1,000 simulated 60-day demand paths per scenario
 - Two scenarios: **No Promotion** vs. **Weekly Promotion**
 
@@ -52,7 +52,7 @@ SARIMAX order `(1,0,2)(0,0,0)[7]` selected via `auto_arima` (AIC-optimized).
 
 ```
 ├── data/
-│   └── retail_store_inventory.csv       # raw dataset (not included — see Data source)
+│   └── retail_store_inventory.csv       # raw dataset (not included, see Data source)
 ├── notebooks/
 │   └── inventory_time_series_forecasting.py   # full analysis pipeline
 ├── report/
@@ -75,11 +75,11 @@ scikit-learn
 
 ## Data Source
 
-[Retail Store Inventory and Demand Forecasting]([https://www.kaggle.com](https://www.kaggle.com/datasets/atomicd/retail-store-inventory-and-demand-forecasting/data)) -- synthetic dataset, Kaggle. Filtered to Store ID `S001`, Product ID `P0005` (Groceries), 760 daily observations (2022-01-01 to 2024-01-30).
+[Retail Store Inventory and Demand Forecasting]([https://www.kaggle.com](https://www.kaggle.com/datasets/atomicd/retail-store-inventory-and-demand-forecasting/data)), synthetic dataset, Kaggle. Filtered to Store ID `S001`, Product ID `P0005` (Groceries), 760 daily observations (2022-01-01 to 2024-01-30).
 
 ## Limitations
 
-- Synthetic dataset; single product/store -- findings may not generalize
+- Synthetic dataset; single product/store -> Findings may not generalize
 - Lead time (1 day) assumed, not empirically identifiable from the data
 - Residuals resampled independently across days (no temporal dependence in simulated errors)
 - Single train/test split rather than rolling-origin cross-validation

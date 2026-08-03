@@ -54,7 +54,7 @@ SARIMAX order `(1,0,2)(0,0,0)[7]` selected via `auto_arima` (AIC-optimized).
 ├── data/
 │   └── retail_store_inventory.csv       # raw dataset (not included — see Data source)
 ├── notebooks/
-│   └── inventory_time_series_forecasting.ipynb   # full analysis pipeline
+│   └── inventory_time_series_forecasting.py   # full analysis pipeline
 ├── report/
 │   └── project_report.pdf               # full written report
 └── README.md

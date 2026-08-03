@@ -79,7 +79,7 @@ scikit-learn
 
 ## Limitations
 
-- Synthetic dataset; single product/store — findings may not generalize
+- Synthetic dataset; single product/store - findings may not generalize
 - Lead time (1 day) assumed, not empirically identifiable from the data
 - Residuals resampled independently across days (no temporal dependence in simulated errors)
 - Single train/test split rather than rolling-origin cross-validation
